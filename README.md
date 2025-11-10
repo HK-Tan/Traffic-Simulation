@@ -29,7 +29,7 @@ If you want to apply this code for your own network, you will need the Road, Jun
 
 Running the network is simple. If your network is stored in a Network object called network, then all you need to do is set the preferences via network.set_preferences(pref) and then call network.evolve_resolve() for as many iterations as you would like. Note that the pref input is optional. Doing network.set_preferences() will use the default preferences. The run_optimization() function in [optimization_script_parallel.py](optimization_script_parallel.py) can be used to find the optimal preferences. See [toy.py](toy/toy.py) for an example of how to build a simple network and how to call the optimization function.
 
-![plot](.\phase1_experiments\gamma_0.0375_ntopt_600\picture.png)
+![plot](./phase1_experiments/gamma_0.0375_ntopt_600/picture.png)
 
 To get the animation and picture creation to work, you will need several files for your network.
 - A blank map, e.g. see [blank_map.png](Lahaina_network_info/blank_map.png), to overlay the roads over.
