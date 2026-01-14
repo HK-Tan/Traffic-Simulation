@@ -58,10 +58,10 @@ if __name__ == "__main__":
     
     # optimization_script_parallel.hyperparameters[-1] = 1  # number of samples for optimization, need to pick 1 here for toy example
     # optimization_script_parallel.run_optimization(None, network, nt_opt_val=10, output_dir="toy")
-    # # Optimal parameters will be saved in output_dir/opt_parameters.txt
+    # # Optimal parameters will be saved in toy/opt_parameters.txt
     # network.read_preferences(os.path.join("toy", "opt_parameters.txt"))
 
-    # Plot the road's initial densities
+    # Plot the roads' initial densities
     road1.plot_current_density()
     road2.plot_current_density()
     road3.plot_current_density()
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     for _ in range(1000):
         network.evolve_resolve(record_densities=True)
 
-    # Animate the road's densities over time
+    # Animate the roads' densities over time
     road1.animate_density_history(os.path.join("toy", "road1_animation.gif"))
     road2.animate_density_history(os.path.join("toy", "road2_animation.gif"))
     road3.animate_density_history(os.path.join("toy", "road3_animation.gif"))
