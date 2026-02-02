@@ -70,13 +70,13 @@ num_processes = 10 # If this number is not assigned, we will use all the availab
 ##########################################################################
 ## Parallelized Gradient Computation Functions
 ##########################################################################
-def run_optimization(network_from, network_to, nt_opt_val, output_dir = None, by_data=False, tag=""):
+def run_optimization(network_from, network_to, nt_opt_val, output_dir = None, by_data=False, tag="",save_file=True):
     Network.prepare_network_densities(network_from, network_to)
 
     if output_dir:
         if not os.path.exists(output_dir): 
             os.makedirs(output_dir)
-    optimize_network_parallel(network_to, nt_opt_val, hyperparameters, os.path.join(output_dir, "opt_parameters" + tag + ".txt"), by_data = by_data)
+    return optimize_network_parallel(network_to, nt_opt_val, hyperparameters, os.path.join(output_dir, "opt_parameters" + tag + ".txt"), by_data = by_data, save_file=save_file)
 
 def compute_gradient_component(args):
     """
@@ -193,7 +193,7 @@ def compute_gradient_parallel(network, current_x, grad_size, sampled_indices, nt
 ## Parallelized Optimization Function
 ##########################################################################
 
-def optimize_network_parallel(network, nt, hyperparameters, save_file_name, by_data=False, num_processes=None):
+def optimize_network_parallel(network, nt, hyperparameters, save_file_name, by_data=False, num_processes=None, save_file=True):
     """
     Optimize the network using parallelized gradient descent.
 
@@ -236,6 +236,7 @@ def optimize_network_parallel(network, nt, hyperparameters, save_file_name, by_d
         para_temp = para
         # Use fresh network copy for base objective - MINIMAL FIX
         network_obj = dill.loads(dill.dumps(network))
+        
         base_obj = objective_function(network_obj, para_temp, nt, boundary_tol, by_data)
         loss_sto.append(base_obj)
         
@@ -282,9 +283,10 @@ def optimize_network_parallel(network, nt, hyperparameters, save_file_name, by_d
     print(f"\nComputational Time Elapsed: {end_time - start_time:.2f} seconds")
 
     # Save the optimized parameters to a file
-    with open(save_file_name, 'w') as f:
-        for p in para:
-            f.write(f"{p}\n")
+    if save_file:
+        with open(save_file_name, 'w') as f:
+            for p in para:
+                f.write(f"{p}\n")
     
     # Save the loss plot
     fig = plt.figure(figsize=(6.0, 4.0))
